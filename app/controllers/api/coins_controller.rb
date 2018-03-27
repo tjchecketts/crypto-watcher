@@ -1,14 +1,22 @@
 class Api::CoinsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_coin, only: [:show, :update, :destroy]
+  before_action :set_coin, only: [:update, :destroy]
   BASE_URL = 'https://api.coinmarketcap.com/v1/ticker/'
 
   def index
+    coins = HTTParty.get(BASE_URL)
+    user_coins = current_user.coins
+    user_coins.each do |coin|
+      res_coin = coins.find { |c| c['id'] == coin.cmc_id }
+      coin.update(price: res_coin['price_usd']) if res_coin
+    end
+  
     render json: current_user.coins
   end
 
   def show
-    render json: @coin
+    res = HTTParty.get("#{BASE_URL}#{params[:id]}")
+    render json: res[0]
   end
 
   def create
