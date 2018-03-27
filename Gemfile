@@ -23,7 +23,8 @@ gem 'puma', '~> 3.7'
 # gem 'capistrano-rails', group: :development
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
+# we will need this so that React Native app can access this data from rails server
+gem 'rack-cors'
 gem 'httparty'
 
 gem 'omniauth'
