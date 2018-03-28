@@ -32,7 +32,7 @@ class Api::CoinsController < ApplicationController
   end
 
   def update
-    current_user.watched.find_by(coin_id: @coin.id).destroy
+    current_user.watched_coins.find_by(coin_id: @coin.id).destroy
   end
 
   def destroy
